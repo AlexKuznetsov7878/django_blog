@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Article list</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+  <div class="wrapper">
+      <a href="{% url 'home' %}"><img src="{% static 'dunder-mifflin-paper-company.png'%}"></a>
+      <nav>
+          <ul>
+              {% if user.is_authenticated %}
+              <li>
+                  <form class="logout-link" action="{% url 'accounts:logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit">Logout</button>
+                  </form>
+              </li>
+              <li><a href="{% url 'articles:create' %}"><button>Add new article</button></a></li>
+              {% else %}
+              <li><a href="{% url 'accounts:login' %}"><button>Login</button></a> </li>
+              <li><a href="{% url 'accounts:signup' %}"><button>Signup</button></a> </li>
+              {% endif %}
+          </ul>
+      </nav>
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
